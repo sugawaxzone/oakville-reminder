@@ -145,7 +145,7 @@ def run_reminders_for(days_ahead, label):
             time_str = start.strftime("%I:%M %p")
 
             message = (
-                f"Hello {name}, your appointment at SugaWax is scheduled for {day_str}, {date_str} at {time_str}. Please reply to confirm or make changes."
+                f"Hello {name}, your appointment at SugaWax Zone is scheduled for {day_str}, {date_str} at {time_str}. Please reply to confirm or make changes."
             )
 
             if TEST_MODE == "true":

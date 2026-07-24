@@ -1,0 +1,43 @@
+name: Daily Appointment Reminders
+
+on:
+  repository_dispatch:
+    types: [remind_tomorrow, remind_in_2days]
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run 1-day reminder (tomorrow)
+      if: github.event.action == 'remind_tomorrow'
+      env:
+        ZENOTI_API_KEY: ${{ secrets.ZENOTI_API_KEY }}
+        ZENOTI_ORG_ID: ${{ secrets.ZENOTI_ORG_ID }}
+        ZENOTI_CENTER_ID: ${{ secrets.ZENOTI_CENTER_ID }}
+        OPENPHONE_API_KEY: ${{ secrets.OPENPHONE_API_KEY }}
+        OPENPHONE_NUMBER_ID: ${{ secrets.OPENPHONE_NUMBER_ID }}
+        TEST_MODE: ${{ secrets.TEST_MODE }}
+      run: python remind_tomorrow.py
+
+    - name: Run 2-day reminder
+      if: github.event.action == 'remind_in_2days'
+      env:
+        ZENOTI_API_KEY: ${{ secrets.ZENOTI_API_KEY }}
+        ZENOTI_ORG_ID: ${{ secrets.ZENOTI_ORG_ID }}
+        ZENOTI_CENTER_ID: ${{ secrets.ZENOTI_CENTER_ID }}
+        OPENPHONE_API_KEY: ${{ secrets.OPENPHONE_API_KEY }}
+        OPENPHONE_NUMBER_ID: ${{ secrets.OPENPHONE_NUMBER_ID }}
+        TEST_MODE: ${{ secrets.TEST_MODE }}
+      run: python remind_in_2_days.py

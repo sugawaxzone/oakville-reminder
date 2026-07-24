@@ -2,7 +2,8 @@ name: Daily Appointment Reminders
 
 on:
   repository_dispatch:
-    types: [remind_tomorrow, remind_in_2days]
+    types: [remind_tomorrow]
+  workflow_dispatch: {}
 
 jobs:
   remind:
